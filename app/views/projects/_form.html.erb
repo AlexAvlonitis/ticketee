@@ -1,25 +1,7 @@
-<h1> New Project </h1>
-<%= form_for project do |f| %>
-  <p>
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
-  </p>
-  <%= f.submit %>
-<% end %>
+<%= simple_form_for project do |f| %>
 
-<% if project.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(@project.errors.count, "error")%>
-      prohibited this project from being saved:</h2>
+  <%= f.input :name %>
+  <%= f.input :description %>
 
-    <ul>
-      <% project.errors.full_messages.each do |mag| %>
-        <li><%= mag %></li>
-      <% end %>
-    </ul>
-  <div>
+  <%= f.button :submit, class: "btn btn-primary" %>
 <% end %>
