@@ -19,11 +19,15 @@ class TicketsController < ApplicationController
   end
 
   def show
-
   end
 
   def edit
+  end
 
+  def destroy
+    @ticket.destroy
+    flash[:notice] = "Ticket has been deleted successfully."
+    redirect_to @project
   end
 
   def update
@@ -33,7 +37,7 @@ class TicketsController < ApplicationController
     else
       flash.now[:alert] = "Ticket has not been updated"
       render 'edit'
-    end    
+    end
   end
 
   private
