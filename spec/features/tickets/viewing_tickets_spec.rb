@@ -2,15 +2,20 @@ require "rails_helper"
 
 feature 'Users can view tickets' do
 
+  let(:author) { FactoryGirl.create(:user) }
+
   before do
+
     atom = FactoryGirl.create(:project, name: "Atom")
     FactoryGirl.create(:ticket, project: atom,
                 name: "Html autocomplete",
-                description: "find the addon hunting")
+                description: "find the addon hunting",
+                author: author)
     sublime = FactoryGirl.create(:project, name: "Sublime")
     FactoryGirl.create(:ticket, project: sublime,
                 name: "hack it",
-                description: "make it work like atom")
+                description: "make it work like atom",
+                author: author)
     visit "/"
   end
 
