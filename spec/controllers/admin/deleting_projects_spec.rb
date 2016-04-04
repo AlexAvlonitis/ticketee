@@ -2,9 +2,13 @@ require 'rails_helper'
 
 feature 'Users can delete projects' do
 
+  before do
+    login_as(FactoryGirl.create(:user, :admin))
+  end
+
   scenario 'successfully' do
     FactoryGirl.create(:project, name: 'Atom')
-
+    
     visit '/'
     click_link 'Atom'
     click_link 'Delete Project'
