@@ -2,25 +2,26 @@ require "rails_helper"
 
 feature 'Users can view tickets' do
 
-  let(:author) { FactoryGirl.create(:user) }
-
   before do
-
-    atom = FactoryGirl.create(:project, name: "Atom")
-    FactoryGirl.create(:ticket, project: atom,
+    author = FactoryGirl.create(:user)
+    sublime = FactoryGirl.create(:project, name: "sublime")
+    assign_role!(author, :viewer, sublime)
+    FactoryGirl.create(:ticket, project: sublime,
                 name: "Html autocomplete",
                 description: "find the addon hunting",
                 author: author)
-    sublime = FactoryGirl.create(:project, name: "Sublime")
-    FactoryGirl.create(:ticket, project: sublime,
+    ie = FactoryGirl.create(:project, name: "ie")
+    assign_role!(author, :viewer, ie)
+    FactoryGirl.create(:ticket, project: ie,
                 name: "hack it",
-                description: "make it work like atom",
+                description: "make it work like a proper browser",
                 author: author)
+    login_as(author)
     visit "/"
   end
 
   scenario "for a given project" do
-    click_link "Atom"
+    click_link "sublime"
     expect(page).to have_content 'Html autocomplete'
     expect(page).not_to have_content "hack it"
 

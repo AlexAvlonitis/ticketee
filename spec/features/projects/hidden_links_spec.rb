@@ -11,17 +11,13 @@ feature 'Users can only see appropriate links' do
       visit '/'
       expect(page).not_to have_link('New Project')
     end
-
-    scenario 'cannot see Delete Project link' do
-      visit project_path(project)
-      expect(page).not_to have_link('Delete Project')
-    end
   end
 
-  context 'regular user' do
+  context 'non-admin users (project viewers)' do
 
     before do
       login_as(user)
+      assign_role!(user, :viewer, project)
     end
 
     scenario 'cannot see New Project link' do
@@ -36,8 +32,11 @@ feature 'Users can only see appropriate links' do
   end
 
   context 'admin user' do
-    
-    before { login_as(admin) }
+
+    before do
+      login_as(admin)
+      assign_role!(admin, :viewer, project)
+    end
 
     scenario 'can see New Project link' do
       visit '/'

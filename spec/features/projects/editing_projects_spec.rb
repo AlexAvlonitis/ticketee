@@ -2,9 +2,12 @@ require 'rails_helper'
 
 feature "Users can edit projects" do
 
-  before do
-    FactoryGirl.create(:project, name: "Atom")
+  let(:user) { FactoryGirl.create(:user) }
+  let(:project) { FactoryGirl.create(:project, name: "Atom") }
 
+  before do
+    login_as(user)
+    assign_role!(user, :viewer, project)
     visit '/'
     click_link 'Atom'
     click_link 'Edit Project'

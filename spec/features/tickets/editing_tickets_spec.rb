@@ -2,11 +2,13 @@ require 'rails_helper'
 
 feature 'Users can edit existing tickets' do
 
-  let(:author) { FactoryGirl.create(:user) }
-  let(:project) { FactoryGirl.create(:project) }
-  let(:ticket) { FactoryGirl.create(:ticket, project: project, author: author) }
+  let!(:author) { FactoryGirl.create(:user) }
+  let!(:project) { FactoryGirl.create(:project) }
+  let!(:ticket) { FactoryGirl.create(:ticket, project: project, author: author) }
 
   before do
+    login_as(author)
+    assign_role!(author, :viewer, project)
     visit project_ticket_path(project, ticket)
     click_link "Edit Ticket"
   end
