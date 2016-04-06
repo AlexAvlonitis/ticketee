@@ -17,4 +17,10 @@ feature "Users can view projects" do
     expect(page.current_url).to eq project_url(project)
   end
 
+  scenario 'unless they don\'t have permission' do
+    FactoryGirl.create(:project, name: 'hidden')
+    visit '/'
+    expect(page).not_to have_content 'hidden'
+  end
+
 end
