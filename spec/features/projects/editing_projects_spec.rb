@@ -7,7 +7,7 @@ feature "Users can edit projects" do
 
   before do
     login_as(user)
-    assign_role!(user, :viewer, project)
+    assign_role!(user, :manager, project)
     visit '/'
     click_link 'Atom'
     click_link 'Edit Project'
