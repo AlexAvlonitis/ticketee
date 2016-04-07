@@ -25,13 +25,18 @@ feature 'Users can only see appropriate links' do
       expect(page).not_to have_link('New Project')
     end
 
+    scenario 'cannot see New Ticket link' do
+      visit project_path(project)
+      expect(page).not_to have_link('New Ticket')
+    end
+
     scenario 'cannot see Delete Project link' do
       visit project_path(project)
       expect(page).not_to have_link('Delete Project')
     end
   end
 
-  context 'admin user' do
+  context 'admin users' do
 
     before do
       login_as(admin)
@@ -47,6 +52,12 @@ feature 'Users can only see appropriate links' do
       visit project_path(project)
       expect(page).to have_link('Delete Project')
     end
+
+    scenario 'can see Delete Project link' do
+      visit project_path(project)
+      expect(page).to have_link('Delete Project')
+    end
+
   end
 
 
