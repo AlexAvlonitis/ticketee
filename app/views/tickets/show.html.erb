@@ -1,0 +1,35 @@
+<div id="ticket">
+  <header>
+    <h1><%= @project.name %></h1>
+  </header>
+  <table id="attributes">
+    <tr>
+      <th>Author: </th>
+      <td><%= @ticket.author.email %></td>
+    </tr>
+    <tr>
+      <th>Created: </th>
+      <td><%= time_ago_in_words(@ticket.created_at) %></td>
+    </tr>
+  </table>
+  <header>
+    <h2><%= @ticket.name %></h2>
+
+    <ul class="actions">
+      <% if policy(@ticket).update? %>
+        <li>
+          <%= link_to "Edit Ticket", [:edit, @project, @ticket], class: "edit"%>
+        </li>
+      <% end %>
+      <% if policy(@ticket).destroy? %>
+        <li>
+          <%= link_to "Delete Ticket", [@project, @ticket],
+              method: :delete,
+              data: {confirm: "Are you sure you want to delete this ticket?"},
+              class: "delete"%>
+        </li>
+      <% end %>
+    </ul>
+  </header>
+  <%= simple_format(@ticket.description) %>
+</div>
