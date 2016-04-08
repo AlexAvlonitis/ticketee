@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  has_many :roles
+
   scope :excluding_archived, lambda { where(archived_at: nil) }
 
   def to_s
@@ -22,5 +24,8 @@ class User < ActiveRecord::Base
     archived_at.nil? ? super : :archived
   end
 
+  def role_on(project)
+    roles.find_by(project_id: project).try(:name)
+  end
 
 end
