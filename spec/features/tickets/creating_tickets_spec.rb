@@ -50,4 +50,16 @@ feature 'Users can create tickets' do
     end
   end
 
+  scenario 'persisting file uploads across form displays' do
+    attach_file "File", 'spec/fixtures/speed.txt'
+    click_button "Create Ticket"
+
+    fill_in "Name", with: "Atom"
+    fill_in "Description", with: "hello asd asdasd sd"
+    click_button "Create Ticket"
+    within('#ticket .attachment') do
+      expect(page).to have_content "speed.txt"
+    end
+  end
+
 end
