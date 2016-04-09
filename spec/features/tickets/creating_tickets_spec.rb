@@ -41,25 +41,44 @@ feature 'Users can create tickets' do
   scenario 'with an attachment' do
     fill_in "Name", with: "Atom"
     fill_in "Description", with: "hello asd asdasd sd"
-    attach_file "File", "spec/fixtures/speed.txt"
+    attach_file "File #1", "spec/fixtures/speed.txt"
     click_button "Create Ticket"
 
     expect(page).to have_content "Ticket has been created."
-    within('#ticket .attachment') do
+    within('#ticket .attachments') do
       expect(page).to have_content "speed.txt"
     end
   end
 
+  scenario 'with multiple attachments' do
+    fill_in "Name", with: "Atom"
+    fill_in "Description", with: "hello asd asdasd sd"
+    attach_file "File #1", "spec/fixtures/speed.txt"
+    attach_file "File #2", "spec/fixtures/spin.txt"
+    attach_file "File #3", "spec/fixtures/gradient.txt"
+
+    click_button 'Create Ticket'
+
+    expect(page).to have_content "Ticket has been created."
+    within('#ticket .attachments') do
+      expect(page).to have_content "speed.txt"
+      expect(page).to have_content "spin.txt"
+      expect(page).to have_content "gradient.txt"
+    end
+  end
+
   scenario 'persisting file uploads across form displays' do
-    attach_file "File", 'spec/fixtures/speed.txt'
+    attach_file "File #1", 'spec/fixtures/speed.txt'
     click_button "Create Ticket"
 
     fill_in "Name", with: "Atom"
     fill_in "Description", with: "hello asd asdasd sd"
     click_button "Create Ticket"
-    within('#ticket .attachment') do
+    within('#ticket .attachments') do
       expect(page).to have_content "speed.txt"
     end
   end
+
+
 
 end
