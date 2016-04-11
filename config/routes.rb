@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :attachments, only: [:show]
+
   devise_for :users
   root 'projects#index'
 
