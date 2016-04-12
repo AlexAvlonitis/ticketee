@@ -50,20 +50,19 @@ feature 'Users can create tickets' do
     end
   end
 
-  scenario 'with multiple attachments' do
+  scenario 'with multiple attachments', js: true do
     fill_in "Name", with: "Atom"
     fill_in "Description", with: "hello asd asdasd sd"
-    attach_file "File #1", "spec/fixtures/speed.txt"
-    attach_file "File #2", "spec/fixtures/spin.txt"
-    attach_file "File #3", "spec/fixtures/gradient.txt"
 
+    attach_file "File #1", "spec/fixtures/speed.txt"
+    click_link 'Add another file'
+    attach_file "File #2", "spec/fixtures/spin.txt"
     click_button 'Create Ticket'
 
     expect(page).to have_content "Ticket has been created."
     within('#ticket .attachments') do
       expect(page).to have_content "speed.txt"
       expect(page).to have_content "spin.txt"
-      expect(page).to have_content "gradient.txt"
     end
   end
 
