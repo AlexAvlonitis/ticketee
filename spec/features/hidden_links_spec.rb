@@ -33,6 +33,11 @@ feature 'Users can only see appropriate links' do
       expect(page).not_to have_link('New Ticket')
     end
 
+    scenario 'cannot see New Comment form' do
+      visit project_ticket_path(project, ticket)
+      expect(page).not_to have_heading('New Comment')
+    end
+
     scenario 'cannot see Delete Project link' do
       visit project_path(project)
       expect(page).not_to have_link('Delete Project')
@@ -59,6 +64,11 @@ feature 'Users can only see appropriate links' do
     scenario 'can see New Project link' do
       visit '/'
       expect(page).to have_link('New Project')
+    end
+
+    scenario 'can see the New Comment form' do
+      visit project_ticket_path(project, ticket)
+      expect(page).to have_heading('New Comment')
     end
 
     scenario 'can see Delete Project link' do
