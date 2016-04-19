@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Users can create tickets' do
-
+  let!(:state) { FactoryGirl.create(:state, name: "New", default: true) }
   let(:user) { FactoryGirl.create(:user) }
 
   before do
@@ -18,6 +18,7 @@ feature 'Users can create tickets' do
     click_button 'Create Ticket'
 
     expect(page).to have_content "Ticket has been created."
+    expect(page).to have_content "State: New"
     within('#ticket') do
       expect(page).to have_content "Author: #{user.email}"
     end
