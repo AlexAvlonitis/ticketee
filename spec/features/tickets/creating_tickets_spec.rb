@@ -79,6 +79,17 @@ feature 'Users can create tickets' do
     end
   end
 
+  scenario 'with assosciated tags' do
+    fill_in "Name", with: "Atom"
+    fill_in "Description", with: "hello asd asdasd sd"
+    fill_in "Tags", with: "browser visual"
+    click_button 'Create Ticket'
 
+    expect(page).to have_content "Ticket has been created."
+    within('#ticket #tags') do
+      expect(page).to have_content "browser"
+      expect(page).to have_content "visual"
+    end
+  end
 
 end
