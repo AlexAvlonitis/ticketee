@@ -45,8 +45,22 @@ feature 'Users can comment on tickets' do
   scenario 'but cannot change the state without permission' do
     assign_role!(user, :editor, project)
     visit project_ticket_path(project, ticket)
-    
+
     expect(page).not_to have_select "State"
+  end
+
+  scenario 'when adding a new tag on tickets' do
+    visit project_ticket_path(project, ticket)
+    expect(page).not_to have_content "bag"
+
+    fill_in "Text", with: "adding the bug tag"
+    fill_in "Tags", with: "bag"
+    click_button 'Create Comment'
+
+    expect(page).to have_content "Comment has been created."
+    within('#ticket #tags') do
+      expect(page).to have_content 'bag'
+    end
   end
 
 end

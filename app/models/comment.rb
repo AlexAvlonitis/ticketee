@@ -4,16 +4,27 @@ class Comment < ActiveRecord::Base
   belongs_to :state
   belongs_to :previous_state, class_name: "State"
 
+  attr_accessor :tag_names
+
   scope :persisted, lambda { where.not(id: nil) }
 
   delegate :project, to: :ticket
 
   before_create :set_previous_state
   after_create :set_ticket_state
+  after_create :associate_tags_with_tickets
 
   validates :text, presence: true
 
   private
+
+  def associate_tags_with_tickets
+    if tag_names
+      tag_names.split.each do |name|
+        ticket.tags << Tag.find_or_create_by(name: name)
+      end
+    end
+  end
 
   def set_ticket_state
     ticket.state = state
