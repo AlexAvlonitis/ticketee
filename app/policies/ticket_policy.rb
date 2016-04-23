@@ -9,6 +9,10 @@ class TicketPolicy < ApplicationPolicy
     destroy?
   end
 
+  def tag?
+    destroy?
+  end
+
   def show?
     user.try(:admin?) || record.project.has_member?(user)
   end
