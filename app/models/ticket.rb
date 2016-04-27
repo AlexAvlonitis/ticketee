@@ -15,7 +15,8 @@ class Ticket < ActiveRecord::Base
   validates :description, presence: true, length: {minimum: 10}
 
   searcher do
-    label :tag, from: :tags, field: "name" 
+    label :tag, from: :tags, field: "name"
+    label :state, from: :state, field: "name" 
   end
 
   def tag_names=(names)
