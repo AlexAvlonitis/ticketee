@@ -21,7 +21,11 @@ Rails.application.routes.draw do
   root 'projects#index'
 
   resources :projects, only: [:index, :show, :edit, :update] do
-    resources :tickets
+    resources :tickets do
+      collection do
+        get :search
+      end
+    end
   end
 
   resources :tickets, only: [] do
@@ -32,5 +36,5 @@ Rails.application.routes.draw do
       end
     end
   end
-  
+
 end

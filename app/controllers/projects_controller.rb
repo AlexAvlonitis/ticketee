@@ -1,4 +1,4 @@
-class ProjectsController < ApplicationController
+  class ProjectsController < ApplicationController
 
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 
@@ -27,6 +27,7 @@ class ProjectsController < ApplicationController
 
   def show
     authorize @project, :show?
+    @tickets = @project.tickets
   end
 
   private

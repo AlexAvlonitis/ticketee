@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem "searcher", github: "radar/searcher"
 gem 'bootstrap-sass'
 # icons
 gem 'font-awesome-rails'

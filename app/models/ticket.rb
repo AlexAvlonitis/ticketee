@@ -14,6 +14,10 @@ class Ticket < ActiveRecord::Base
   validates :name, presence: true
   validates :description, presence: true, length: {minimum: 10}
 
+  searcher do
+    label :tag, from: :tags, field: "name" 
+  end
+
   def tag_names=(names)
     @tag_names = names
     names.split.each do |name|
