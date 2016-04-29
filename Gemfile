@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem "searcher", github: "radar/searcher"
 gem 'bootstrap-sass'
+gem 'active_model_serializers'
 # icons
 gem 'font-awesome-rails'
 # easy bootstrap forms
